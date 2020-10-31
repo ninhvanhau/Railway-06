@@ -1,88 +1,99 @@
 DROP DATABASE IF EXISTS testing_tystem;
-CREATE DATABASE	testing_tystem;
+CREATE DATABASE	IF NOT EXISTS testing_tystem;
 USE testing_tystem; 
 
 DROP TABLE IF EXISTS departments;
 CREATE TABLE departments(
-	department_id 				INT,
-	department_name				VARCHAR(50)
+	department_id 				TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+	department_name				NVARCHAR(50) NOT NULL,
+    `DESCRIPTION`				TEXT
+
 );
 
 DROP TABLE IF EXISTS positions;
+
 CREATE TABLE positions(
-	position_id					INT,
-	position_name				VARCHAR(50)	
+	position_id					TINYINT PRIMARY KEY AUTO_INCREMENT,
+	position_name				ENUM( 'DEV' ,'Test','Scrum Master','PM')
 );
 
 DROP TABLE IF EXISTS accounts;
 CREATE TABLE accounts(
-	account_id					INT,
-	email						VARCHAR(50),
-	user_name					VARCHAR(50),
-	full_name					VARCHAR(50),
-	department_id				INT,
-	position_id 				INT,
-	create_date 				DATE
+	account_id					TINYINT PRIMARY KEY AUTO_INCREMENT,
+	email						VARCHAR(100) UNIQUE KEY NOT NULL ,
+	user_name					NVARCHAR(50) NOT NULL,
+	full_name					NVARCHAR(50)NOT NULL,
+	department_id				INT UNSIGNED  DEFAULT(1),
+	position_id 				INT UNSIGNED  NOT NULL ,
+	create_date 				DATE,
+     FOREIGN KEY (department_id) REFERENCES department (department_id)  
 );
 
 DROP TABLE IF EXISTS `groups`;
 CREATE TABLE `groups`(
-	group_id					INT,
-	group_name					VARCHAR(50),
-	creator_id					INT,
+	group_id					TINYINT PRIMARY KEY AUTO_INCREMENT,
+	group_name					NVARCHAR(50) NOT NULL,
+	creator_id					INT UNSIGNED ,
 	create_date					DATE
+     
 );
 
 DROP TABLE IF EXISTS group_account;
 CREATE TABLE group_account(
-	group_id					INT,
-	account_id					INT,
-	join_date					DATE
+	group_id					TINYINT UNSIGNED ,
+	account_id					TINYINT UNSIGNED ,
+	join_date					DATE,
+    PRIMARY KEY ( group_id,account_id),
+	FOREIGN KEY (account_id) REFERENCES accounts (account_id)  
 );
 
 DROP TABLE IF EXISTS type_question;
 CREATE TABLE type_question(
-	type_id						INT,
-	type_name					VARCHAR(50)
+	type_id						TINYINT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
+	type_name					ENUM('essay','Multiple-Choice') 
 );
 
 DROP TABLE IF EXISTS category_question;
 CREATE TABLE category_question(
-	category_id					INT,
-	caregory_name				VARCHAR(50)
+	creator_id					TINYINT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,
+	caregory_name				NVARCHAR(50) NOT NULL
 );
 
 DROP TABLE IF EXISTS questions;
 CREATE TABLE questions(
-	question_id					INT,
+	question_id					TINYINT PRIMARY KEY AUTO_INCREMENT,
 	content						VARCHAR(50),
-	category_id					INT,
-	type_id						INT,
-	creator_id					INT,
-	create_date					DATE
+	category_id					TINYINT UNSIGNED ,
+	type_id						TINYINT UNSIGNED ,
+	creator_id					TINYINT UNSIGNED ,
+	create_date					DATE,
+    FOREIGN KEY (category_id) REFERENCES category_question (creator_id)
 );
 
 DROP TABLE IF EXISTS answers;
 CREATE TABLE answers(
-	answer_id					INT,
-	content						VARCHAR(50),
-	question_id					INT,
-	is_correct					VARCHAR(50)
+	answer_id					TINYINT UNSIGNED  PRIMARY KEY,
+	content						VARCHAR(100),
+	question_id					TINYINT UNSIGNED ,
+	is_correct					ENUM('yes','no'),
+    FOREIGN KEY (question_id) REFERENCES questions (question_id)
 );
 
 DROP TABLE IF EXISTS exams;
 CREATE TABLE exams(
-	exam_id						INT,
-	`code`						INT,
+	exam_id						TINYINT UNSIGNED  PRIMARY KEY,
+	`code`						TINYINT UNSIGNED ,
 	title						VARCHAR(50),
 	category_id					DATE,
 	duration					VARCHAR(50),
-	creator_id					INT,
+	creator_id					TINYINT UNSIGNED  ,
 	create_date					DATE
 );
 
 DROP TABLE IF EXISTS exam_question;
 CREATE TABLE exam_question(
-	exam_id						INT,
-	question_id					INT
-);
+	exam_id						TINYINT UNSIGNED ,
+	question_id					TINYINT UNSIGNED ,
+    PRIMARY KEY(exam_id,question_id	),
+    FOREIGN KEY (exam_id) REFERENCES exams (exam_id)
+    );
