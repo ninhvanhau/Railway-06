@@ -22,7 +22,7 @@ CREATE TABLE accounts(
 	email						VARCHAR(100) UNIQUE KEY NOT NULL ,
 	user_name					NVARCHAR(100) NOT NULL,
 	full_name					NVARCHAR(100)NOT NULL,
-	department_id				INT UNSIGNED  DEFAULT(1),
+	department_id				TINYINT UNSIGNED  ,
 	position_id 				INT UNSIGNED  NOT NULL ,
 	create_date 				DATE,
 	FOREIGN KEY (department_id) REFERENCES departments (department_id)
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `groups`;
 CREATE TABLE `groups`(
 	group_id					TINYINT PRIMARY KEY AUTO_INCREMENT,
 	group_name					NVARCHAR(100) NOT NULL,
-	creator_id					INT UNSIGNED ,
+	creator_id					TINYINT UNSIGNED ,
 	create_date					DATE,
 	FOREIGN KEY (creator_id) 	REFERENCES category_question (creator_id)
 );
