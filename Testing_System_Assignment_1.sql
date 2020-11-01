@@ -86,7 +86,8 @@ CREATE TABLE exams(
 	category_id					DATE,
 	duration					VARCHAR(100),
 	creator_id					TINYINT UNSIGNED  ,
-	create_date					DATE
+	create_date					DATE,
+    FOREIGN KEY (category_id) 	REFERENCES category_question (creator_id)
 );
 
 DROP TABLE IF EXISTS exam_question;
