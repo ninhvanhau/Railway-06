@@ -5,9 +5,8 @@ USE testing_tystem;
 DROP TABLE IF EXISTS departments;
 CREATE TABLE departments(
 	department_id 				TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-	department_name				NVARCHAR(100) NOT NULL,
-    `DESCRIPTION`				TEXT
-
+	department_name				NVARCHAR(100) NOT NULL
+    
 );
 
 DROP TABLE IF EXISTS positions;
@@ -26,7 +25,7 @@ CREATE TABLE accounts(
 	department_id				INT UNSIGNED  DEFAULT(1),
 	position_id 				INT UNSIGNED  NOT NULL ,
 	create_date 				DATE,
-	FOREIGN KEY (department_id) REFERENCES department (department_id)  
+	FOREIGN KEY (department_id) REFERENCES departments (department_id)
 );
 
 DROP TABLE IF EXISTS `groups`;
@@ -34,8 +33,8 @@ CREATE TABLE `groups`(
 	group_id					TINYINT PRIMARY KEY AUTO_INCREMENT,
 	group_name					NVARCHAR(100) NOT NULL,
 	creator_id					INT UNSIGNED ,
-	create_date					DATE
-     
+	create_date					DATE,
+	FOREIGN KEY (creator_id) 	REFERENCES category_question (creator_id)
 );
 
 DROP TABLE IF EXISTS group_account;
