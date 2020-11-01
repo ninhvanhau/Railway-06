@@ -95,5 +95,7 @@ CREATE TABLE exam_question(
 	exam_id						TINYINT UNSIGNED ,
 	question_id					TINYINT UNSIGNED ,
     PRIMARY KEY(exam_id,question_id	),
-    FOREIGN KEY (exam_id) 		REFERENCES exams (exam_id)
+    FOREIGN KEY (exam_id) 		REFERENCES exams (exam_id),
+    FOREIGN KEY (exam_id) 		REFERENCES exams (exam_id),
+    FOREIGN KEY (question_id) 	REFERENCES questions (question_id)
     );
