@@ -29,6 +29,10 @@ FROM			`Group`
 WHERE 			CreateDate < '2019-12-20';
 
 -- Question 7: Lấy ra ID của question có >= 4 câu trả lời 
+SELECT 			COUNT(1) ,QuestionID
+FROM 			Answer
+GROUP BY 		QuestionID
+HAVING 			COUNT(1) >= '4';
 
 
 -- Question 8: Lấy ra các mã đề thi có thời gian thi >= 60 phút và được tạo trước ngày 20/12/2019 
