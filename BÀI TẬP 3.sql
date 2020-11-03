@@ -47,9 +47,10 @@ ORDER BY		CreateDate DESC
 LIMIT			5;		
 
 -- Question 10: Đếm số nhân viên thuộc department có id = 2 
-SELECT 			COUNT(1)
-FROM 			Department
-WHERE 			DepartmentID = '2';
+SELECT 			COUNT(1) ,DepartmentID
+FROM 			`Account`
+GROUP BY 		DepartmentID
+HAVING 			COUNT(1) = '2';
 
 -- Question 11: Lấy ra nhân viên có tên bắt đầu bằng chữ "D" và kết thúc bằng chữ "o" 	
 SELECT 			*
