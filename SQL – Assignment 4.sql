@@ -47,6 +47,64 @@ GROUP BY 			QuestionID
 ORDER BY        	COUNT(1) DESC 
 LIMIT 				1;
 
+-- Question 14 && Question15 :Lấy ra group không có account nào
+SELECT *
+FROM 				`Group`
+LEFT JOIN 			`GroupAccount` USING (GroupID)
+WHERE 				`GroupAccount`.GroupID IS NULL;
 
+-- Question 16: Lấy ra question không có answer nào
+SELECT *
+FROM 				Question
+LEFT JOIN 			Answer USING (QuestionID)
+WHERE 				Answer.QuestionID IS NULL;
+
+-- Question 17: 
+-- a-Lấy các account thuộc nhóm thứ 1
+SELECT *
+FROM 				`Account`
+JOIN 				`GroupAccount` USING (AccountID)
+Where 				GroupID ='1' ;
+-- b-Lấy các account thuộc nhóm thứ 2
+SELECT *
+FROM 				`Account`
+JOIN 				`GroupAccount` USING (AccountID)
+Where				GroupID ='2' ;
+-- c- Ghép 2 kết quả từ câu a) và câu b) sao cho không có record nào trùng nhau
+SELECT 				Username
+FROM 				`Account`
+JOIN 				`GroupAccount` USING (AccountID)
+Where				GroupID ='3' 
+UNION
+SELECT 				Username
+FROM 				`Account`
+JOIN 				`GroupAccount` USING (AccountID)
+Where 				GroupID ='1'; 
+
+-- Question 18:
+-- a) Lấy các group có lớn hơn 5 thành viên
+SELECT				COUNT(1),GroupID,GroupName,CreatorID,CreateDate
+FROM 				`Group`
+LEFT JOIN			GroupAccount USING (GroupID)
+GROUP BY 			(GroupID)
+HAVING 				COUNT(1) >= '5' ;
+-- b) Lấy các group có nhỏ hơn 7 thành viên
+SELECT				COUNT(1),GroupID,GroupName,CreatorID,CreateDate
+FROM 				`Group`
+LEFT JOIN			GroupAccount USING (GroupID)
+GROUP BY 			(GroupID)
+HAVING 				COUNT(1) <'7' ;
+-- c) Ghép 2 kết quả từ câu a) và câu b)
+SELECT				COUNT(1),GroupID,GroupName,CreatorID,CreateDate
+FROM 				`Group`
+LEFT JOIN			GroupAccount USING (GroupID)
+GROUP BY 			(GroupID)
+HAVING 				COUNT(1) >= '5' 
+UNION
+SELECT				COUNT(1),GroupID,GroupName,CreatorID,CreateDate
+FROM 				`Group`
+LEFT JOIN			GroupAccount USING (GroupID)
+GROUP BY 			(GroupID)
+HAVING 				COUNT(1) <'7' ;
 
 
